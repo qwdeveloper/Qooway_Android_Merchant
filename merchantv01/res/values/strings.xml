@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">merchantv01</string>
+    <string name="app_name">Qooway Merchant App</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+  <string name="menu_more">Menu More</string>
+        <string name="search_title">search</string>
+    
+       	 <string-array name="menu_item">
+ <item>RECORD TRANSACTIONS</item>
+  <item>VOID TRANSACTIONS</item>
+   <item>MISSING TRANSACTIONS</item>
+    <item>SALES TRANSACTIONS</item>
+    </string-array>
+    
+       	 	<string-array name="menu_item_image_name">
+        <item>record_icon</item>
+        <item>missing_icon</item>
+        <item>void_icon</item>
+        <item>sales_history_icon</item>
 
+    </string-array>
+    
+	<string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="action_websearch">Web search</string>
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
+    
+     	<string name="record_transactions">RECORD TRANSACTIONS</string>
+  	<string name="void_transactions">VOID TRANSACTIONS</string>
+   	<string name="missing_transactions">MISSING TRANSACTIONS</string>
+    	<string name="sales_history">SALES TRANSACTIONS</string>
 </resources>
