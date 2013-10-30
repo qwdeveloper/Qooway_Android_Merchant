@@ -1,5 +1,6 @@
 <resources>
 
+    
     <!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
@@ -117,7 +118,7 @@
  <color name="DarkGray">#414042</color>
  <color name="Brown">#A52A2A</color>
  <color name="Sienna">#A0522D</color>
- 
+ <color name="DarkGray2">#595A5C</color>
  <color name="YellowGreen">#9ACD32</color>
  <color name="DarkOrchid">#9932CC</color>
  <color name="PaleGreen">#98FB98</color>
@@ -178,4 +179,3 @@
  <color name="DarkBlue">#00008B</color>
  <color name="Navy">#000080</color>
 </resources>
- 

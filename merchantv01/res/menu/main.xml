@@ -4,12 +4,13 @@
 
     
 
-    <item
-        android:id="@+id/menu_more"
-        android:icon="@drawable/menu_icon"
-        android:showAsAction="always"
-        android:title="@string/search_title"
-        android:focusable="false" 
-        android:focusableInTouchMode="false"/>
+    <item android:id="@+id/search"
+          android:title="@string/search_title"
+          android:icon="@drawable/missing_icon"
+          android:showAsAction="always"
+          android:actionViewClass="android.widget.SearchView"
+   		   android:textColor="@color/White"
+      />
+
 
 </menu>
