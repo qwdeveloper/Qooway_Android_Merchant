@@ -34,15 +34,16 @@
     <string name="qoopoints">QooPoints Earned:</string>
     <string name="vouchers">Vouchers:</string>
     <string name="submit">Submit</string>
-    <string name="record_transactions">RECORD TRANSACTIONS</string>
-    <string name="void_transactions">VOID TRANSACTIONS</string>
-    <string name="missing_transactions">MISSING TRANSACTIONS</string>
-    <string name="sales_history">SALES TRANSACTIONS</string>
+    <string name="record_transactions">Record Transactions</string>
+    <string name="void_transactions">Void Transactions</string>
+    <string name="missing_transactions">Missing Transactions</string>
+    <string name="sales_history">Sales History</string>
     <string name="date">Date:</string>
     <string name="time">Time:</string>
     <string name="reason">Reason:</string>
     <string name="search_by_card">Search by Card Number:</string>
-        <string name="search">Search</string>
-                <string name="_void">Void</string>
+    <string name="search">Search</string>
+    <string name="_void">Void</string>
+    <string name="points_earned">Points Earned</string>
 
 </resources>

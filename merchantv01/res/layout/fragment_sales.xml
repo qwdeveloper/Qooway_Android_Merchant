@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+	android:background="@color/Gray"
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="@color/Red"
+        android:gravity="center"
+        android:text="@string/sales_history"
+        android:textColor="@color/White" 
+          android:textSize="20dp"/>
+
+     <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:background="@color/DarkGray" >
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Date"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Time"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/sales_amount"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/sales_amount"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/points_earned"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/points_earned"
+                android:textColor="@android:color/white" />
+        </TableRow>
+
+
+
+</LinearLayout>

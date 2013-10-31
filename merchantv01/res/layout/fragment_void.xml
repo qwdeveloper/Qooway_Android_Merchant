@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/White"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="@color/Red"
+        android:gravity="center"
+        android:text="@string/void_transactions"
+        android:textColor="@color/White"
+        android:textSize="20dp" />
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_by_card"
+            android:textColor="@color/DarkGray2"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/please_enter_card"
+            android:textColor="@color/DarkGray2"
+            android:textSize="13dp" />
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/big_bar"
+            android:ems="10"
+            android:textColor="@color/DarkGray2" >
+
+            <requestFocus />
+        </EditText>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="20dp" >
+
+            <Button
+                android:id="@+id/button1"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="240dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/submit_icon"
+                android:text="@string/search"
+                android:textColor="@android:color/white"
+                android:textSize="30dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/DarkGray"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Date"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Time"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/sales_amount"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Sales Amount"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/points_earned"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/points_earned"
+                android:textColor="@android:color/white" />
+        </TableRow>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_above="@+id/dummyView"
+            android:background="@color/Gray"
+            android:gravity="center"
+            android:orientation="vertical"
+             >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:id="@+id/button1"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="240dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/submit_icon"
+                    android:text="@string/_void"
+                    android:textColor="@android:color/white"
+                    android:textSize="30dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/dummyView"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true" >
+        </View>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -9,20 +9,58 @@
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-
-
     </FrameLayout>
     <!-- The navigation drawer -->
+
+    <SlidingDrawer
+        android:id="@+id/slidingDrawer1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:content="@+id/content"
+        android:handle="@+id/handle" >
+
+        <Button
+            android:id="@+id/handle"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/Red"
+            android:text="Notification"
+            android:textColor="@color/White" />
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" 
+            android:background="@color/LightGrey">
+
+            <ListView
+                android:id="@+id/notificationList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" 
+                android:listSelector="@drawable/listselector_yellow">
+            </ListView>
+
+                       <View
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="800dp"
+           >
+            
+            android:background="@color/LightGrey" >
+        </View>
+        </LinearLayout>
+
+    </SlidingDrawer>
 
     <ListView
         android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/DarkGray"
+        android:background="@color/Blue"
         android:choiceMode="singleChoice"
-        android:dividerHeight="1dp" />
-    
-
+        android:dividerHeight="1dp" 
+        android:divider="@color/White"/>
 
 </android.support.v4.widget.DrawerLayout>

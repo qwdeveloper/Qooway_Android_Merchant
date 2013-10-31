@@ -4,14 +4,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.example.merchantv01.R;
 import com.example.merchantv01.R.color;
+
 import Drawer.DrawerItemAdapter;
 import Drawer.DrawerModelAdapter;
+import Notifications.NotificationItemAdapter;
+import Notifications.NotificationModelAdapter;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -67,6 +71,7 @@ GooglePlayServicesClient.OnConnectionFailedListener{
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private static Location mCurrentLocation;
     private static LocationClient mLocationClient ;
+    private static ListView notificationDisplayList;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +147,20 @@ GooglePlayServicesClient.OnConnectionFailedListener{
          * handle callbacks.
          */
         mLocationClient = new LocationClient(this, this, this);
+        
+		  notificationDisplayList = (ListView) findViewById(R.id.notificationList);
+	        String testname[] = new String[]{"DouMing Mok" , "Alan chan" , "Fiona Wong" ,"Kenji McNabb" ,"Jessica Dekoning"};
+	        String testImageFiles[] = new String[]{"record_user_icon" , "record_user_icon" , "record_user_icon" ,"record_user_icon" ,"record_user_icon"};
+	        Date d = new Date();
+	        String stringNow =d.toString();
+	        String testTime[] =new String[] { stringNow,stringNow,stringNow,stringNow,stringNow};
+			NotificationModelAdapter.LoadModel(testname,testImageFiles,testTime , "record_checkins_y_yes__icon" , "record_checkins_x_no__icon" );
+			String[] NotificationIds = new String[NotificationModelAdapter.Items.size()];
+			for (int i = 0; i < NotificationIds.length; i++) {
+				NotificationIds[i] = Integer.toString(i + 1);
+			}
+			NotificationItemAdapter Adapter = new NotificationItemAdapter(this, R.layout.notification_list, NotificationIds);
+			notificationDisplayList.setAdapter(Adapter);
 	}
 
 	@Override
@@ -156,7 +175,8 @@ GooglePlayServicesClient.OnConnectionFailedListener{
 		// Getting the 'search_plate' LinearLayout.
 		View searchPlate = searchView.findViewById(searchPlateId);
 		searchPlate.setBackgroundResource(R.drawable.searchbar);
-		return super.onCreateOptionsMenu(menu);
+		
+ return super.onCreateOptionsMenu(menu);
 	}
 
 	/* Called whenever we call invalidateOptionsMenu() */
