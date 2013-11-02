@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/White"
     android:orientation="vertical" >
 
     <TextView
@@ -71,51 +70,71 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            android:background="@color/DarkGray"
-            android:gravity="center" >
+  <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/DarkGray"
+        android:gravity="center" >
 
-            <TextView
-                android:id="@+id/date"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Date"
-                android:textColor="@android:color/white" />
+        <TextView
+            android:id="@+id/date"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Date"
+			android:layout_width="wrap_content"
+            android:textColor="@android:color/white" />
 
-            <TextView
-                android:id="@+id/time"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Time"
-                android:textColor="@android:color/white" />
+        <TextView
+            android:id="@+id/time"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Time"
+            android:layout_width="wrap_content"
+            android:textColor="@android:color/white" />
 
-            <TextView
-                android:id="@+id/sales_amount"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Sales Amount"
-                android:textColor="@android:color/white" />
+        <TextView
+            android:id="@+id/sales_amount"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/sales_amount"
+			android:layout_width="wrap_content"
+            android:textColor="@android:color/white" />
 
-            <TextView
-                android:id="@+id/points_earned"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/points_earned"
-                android:textColor="@android:color/white" />
-        </TableRow>
+        <TextView
+            android:id="@+id/points_earned"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/points_earned"
+			android:layout_width="wrap_content"
+            android:textColor="@android:color/white" />
+    </TableRow>
 
         <LinearLayout
+            android:id="@+id/listViewParent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                        android:layout_below="@+id/tableRow1"
+            android:layout_above="@+id/voidButtonView"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ListView
+                android:id="@+id/listView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </ListView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/voidButtonView"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_above="@+id/dummyView"
             android:background="@color/Gray"
             android:gravity="center"
-            android:orientation="vertical"
-             >
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="wrap_content"

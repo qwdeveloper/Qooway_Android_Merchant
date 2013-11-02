@@ -21,6 +21,15 @@
         <item>sales_history_icon</item>
     </string-array>
 
+    
+    <string-array name="transaction_xml">
+        <item>CustomerID</item>
+        <item>MerchantID</item>
+        <item>OrderID</item>
+        <item>OrderTime</item>
+        <item>Points</item>
+        <item>SoldAmount</item>
+    </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>

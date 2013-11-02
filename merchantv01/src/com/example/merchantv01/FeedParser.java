@@ -44,14 +44,14 @@ public class FeedParser {
         List<Entry>  entries = new ArrayList();
 
         try{
-        parser.require(XmlPullParser.START_TAG, ns, "ArrayOfMerchant");
+        parser.require(XmlPullParser.START_TAG, ns, "ArrayOfTransaction");
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
             String name = parser.getName();
             // Starts by looking for the entry tag
-            if (name.equals("Merchant")) {
+            if (name.equals("Transaction")) {
                 entries.add(readEntry(parser , activity));
             } else {
                 skip(parser);
@@ -70,11 +70,11 @@ public class FeedParser {
     // Parses the contents of an entry. If it encounters a name, summary, or link tag, hands them off
     // to their respective "read" methods for processing. Otherwise, skips the tag.
     private Entry readEntry(XmlPullParser parser , Activity activity) throws XmlPullParserException, IOException {
-        parser.require(XmlPullParser.START_TAG, ns, "Merchant");
+        parser.require(XmlPullParser.START_TAG, ns, "Transaction");
         String name = null;
         Map<String, String> info= new HashMap<String, String>();
         String[] infoString = null;
-     //   infoString= activity.getResources().getStringArray(R.array.merchant_xml);
+        infoString= activity.getResources().getStringArray(R.array.transaction_xml);
         ArrayList<String> infoNeeded =  new ArrayList<String>();
         
         for(String item : infoString ){
@@ -87,7 +87,7 @@ public class FeedParser {
                 continue;
             }
             String title = parser.getName();
-            if (title.equals("Name")) {
+            if (title.equals("OrderID")) {
                 name = readInfo(parser, title);
             } else if (infoNeeded.contains(title)) {
             	info.put(title, readInfo(parser, title)) ;

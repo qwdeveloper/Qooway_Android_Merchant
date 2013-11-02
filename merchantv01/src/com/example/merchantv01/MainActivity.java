@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,8 @@ import Drawer.DrawerItemAdapter;
 import Drawer.DrawerModelAdapter;
 import Notifications.NotificationItemAdapter;
 import Notifications.NotificationModelAdapter;
+import Transactions.TransactionsItemAdapter;
+import Transactions.TransactionsModelAdapter;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -51,9 +54,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 import android.widget.TextView;
 
-public class MainActivity extends Activity  implements
-GooglePlayServicesClient.ConnectionCallbacks,
-GooglePlayServicesClient.OnConnectionFailedListener{
+public class MainActivity extends Activity  {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -62,17 +63,16 @@ GooglePlayServicesClient.OnConnectionFailedListener{
 	private CharSequence mTitle;
 	private String[] mPlanetTitles;
 	private String serverUrl = "http://192.168.1.96:50364";
-	private String APIUrl = "api/merchant";
+	
+	private String APIUrl = "api/transaction?MerchantID=141";
 	private String stringUrl = serverUrl + "/" + APIUrl;
 	private TextView displayText;
-	private static List<Entry> listToDisplay ;
+	private static List<Entry> listToDisplay;
 	private Activity currentActvity;
-	private static ListView listViewToDisplay ;
-    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-    private static Location mCurrentLocation;
-    private static LocationClient mLocationClient ;
-    private static ListView notificationDisplayList;
-    
+	private static ListView listViewToDisplay;
+	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+	private static ListView notificationDisplayList;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -135,6 +135,32 @@ GooglePlayServicesClient.OnConnectionFailedListener{
 
 		currentActvity = this;
 		// code for testing HTTP / XML fetch
+	
+		/*
+		 * Create a new location client, using the enclosing class to handle
+		 * callbacks.
+		 */
+
+		notificationDisplayList = (ListView) findViewById(R.id.notificationList);
+		String testname[] = new String[] { "DouMing Mok", "Alan chan",
+				"Fiona Wong", "Kenji McNabb", "Jessica Dekoning" };
+		String testImageFiles[] = new String[] { "record_user_icon",
+				"record_user_icon", "record_user_icon", "record_user_icon",
+				"record_user_icon" };
+		Date d = new Date();
+		String stringNow = d.toString();
+		String testTime[] = new String[] { stringNow, stringNow, stringNow,
+				stringNow, stringNow };
+		NotificationModelAdapter.LoadModel(testname, testImageFiles, testTime,
+				"record_checkins_y_yes__icon", "record_checkins_x_no__icon");
+		String[] NotificationIds = new String[NotificationModelAdapter.Items
+				.size()];
+		for (int i = 0; i < NotificationIds.length; i++) {
+			NotificationIds[i] = Integer.toString(i + 1);
+		}
+		NotificationItemAdapter Adapter = new NotificationItemAdapter(this,
+				R.layout.notification_list, NotificationIds);
+		notificationDisplayList.setAdapter(Adapter);
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
@@ -142,25 +168,6 @@ GooglePlayServicesClient.OnConnectionFailedListener{
 		} else {
 			displayText.setText("No network connection available.");
 		}
-	       /*
-         * Create a new location client, using the enclosing class to
-         * handle callbacks.
-         */
-        mLocationClient = new LocationClient(this, this, this);
-        
-		  notificationDisplayList = (ListView) findViewById(R.id.notificationList);
-	        String testname[] = new String[]{"DouMing Mok" , "Alan chan" , "Fiona Wong" ,"Kenji McNabb" ,"Jessica Dekoning"};
-	        String testImageFiles[] = new String[]{"record_user_icon" , "record_user_icon" , "record_user_icon" ,"record_user_icon" ,"record_user_icon"};
-	        Date d = new Date();
-	        String stringNow =d.toString();
-	        String testTime[] =new String[] { stringNow,stringNow,stringNow,stringNow,stringNow};
-			NotificationModelAdapter.LoadModel(testname,testImageFiles,testTime , "record_checkins_y_yes__icon" , "record_checkins_x_no__icon" );
-			String[] NotificationIds = new String[NotificationModelAdapter.Items.size()];
-			for (int i = 0; i < NotificationIds.length; i++) {
-				NotificationIds[i] = Integer.toString(i + 1);
-			}
-			NotificationItemAdapter Adapter = new NotificationItemAdapter(this, R.layout.notification_list, NotificationIds);
-			notificationDisplayList.setAdapter(Adapter);
 	}
 
 	@Override
@@ -175,8 +182,8 @@ GooglePlayServicesClient.OnConnectionFailedListener{
 		// Getting the 'search_plate' LinearLayout.
 		View searchPlate = searchView.findViewById(searchPlateId);
 		searchPlate.setBackgroundResource(R.drawable.searchbar);
-		
- return super.onCreateOptionsMenu(menu);
+
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	/* Called whenever we call invalidateOptionsMenu() */
@@ -278,9 +285,9 @@ GooglePlayServicesClient.OnConnectionFailedListener{
 		protected List<Entry> doInBackground(String... urls) {
 
 			// params comes from the execute() call: params[0] is the url.
-			List<Entry> result=null;
+			List<Entry> result = null;
 			try {
-				result= loadXml(urls[0]);
+				result = loadXml(urls[0]);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -302,219 +309,181 @@ GooglePlayServicesClient.OnConnectionFailedListener{
 			FeedParser parser = new FeedParser();
 
 			try {
-				stream = downloadUrl(urlString);			
+				stream = downloadUrl(urlString);
 				entries = parser.parse(stream, currentActvity);
 				// Makes sure that the InputStream is closed after the app is
 				// finished using it.
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			} 
-				if (stream != null) {
-					stream.close();
-				}
-			
+			}
+			if (stream != null) {
+				stream.close();
+			}
+
 			return entries;
 
 		}
 
 		private InputStream downloadUrl(String urlString) throws IOException {
-		    URL url = new URL(urlString);
-		    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		    conn.setReadTimeout(10000 /* milliseconds */);
-		    conn.setConnectTimeout(15000 /* milliseconds */);
-		    conn.setRequestMethod("GET");
-		    conn.setDoInput(true);
-		    conn.setRequestProperty("Accept", "text/xml");
-		    // Starts the query
-		    conn.connect();
-		    
-		    return conn.getInputStream();
+			URL url = new URL(urlString);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setReadTimeout(10000 /* milliseconds */);
+			conn.setConnectTimeout(15000 /* milliseconds */);
+			conn.setRequestMethod("GET");
+			conn.setDoInput(true);
+			conn.setRequestProperty("Accept", "text/xml");
+			// Starts the query
+			conn.connect();
+
+			return conn.getInputStream();
 		}
 
 	}
 
-//private classes
-	
-	 public static class ErrorDialogFragment extends DialogFragment {
-	        // Global field to contain the error dialog
-	        private Dialog mDialog;
-	        // Default constructor. Sets the dialog field to null
-	        public ErrorDialogFragment() {
-	            super();
-	            mDialog = null;
-	        }
-	        // Set the dialog to display
-	        public void setDialog(Dialog dialog) {
-	            mDialog = dialog;
-	        }
-	        // Return a Dialog to the DialogFragment.
-	        @Override
-	        public Dialog onCreateDialog(Bundle savedInstanceState) {
-	            return mDialog;
-	        }
-	    }
-	
-	  @Override
-	    protected void onActivityResult(
-	            int requestCode, int resultCode, Intent data) {
-	        // Decide what to do based on the original request code
-	        switch (requestCode) {
+	// private classes
 
-	            case CONNECTION_FAILURE_RESOLUTION_REQUEST :
-	            /*
-	             * If the result code is Activity.RESULT_OK, try
-	             * to connect again
-	             */
-	                switch (resultCode) {
-	                    case Activity.RESULT_OK :
-	                    /*
-	                     * Try the request again
-	                     */
+	public static class ErrorDialogFragment extends DialogFragment {
+		// Global field to contain the error dialog
+		private Dialog mDialog;
 
-	                    break;
+		// Default constructor. Sets the dialog field to null
+		public ErrorDialogFragment() {
+			super();
+			mDialog = null;
+		}
 
-	        }
-	     }
-	  }
-	    private boolean servicesConnected() {
-	        // Check that Google Play services is available
-	        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-	        // If Google Play services is available
-	        if (ConnectionResult.SUCCESS == resultCode) {
-	            // In debug mode, log the status
-	            Log.d("Location Updates",
-	                    "Google Play services is available.");
-	            // Continue
-	            return true;
-	        // Google Play services was not available for some reason
-	        } else {
-	            // Get the error code
-	            // Get the error dialog from Google Play services
-	            Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(
-	                    resultCode,
-	                    this,
-	                    CONNECTION_FAILURE_RESOLUTION_REQUEST);
+		// Set the dialog to display
+		public void setDialog(Dialog dialog) {
+			mDialog = dialog;
+		}
 
-	            // If Google Play services can provide an error dialog
-	            if (errorDialog != null) {
-	                // Create a new DialogFragment for the error dialog
-	                ErrorDialogFragment errorFragment =
-	                        new ErrorDialogFragment();
-	                // Set the dialog in the DialogFragment
-	                errorFragment.setDialog(errorDialog);
-	                // Show the error dialog in the DialogFragment
-	                errorFragment.show(getFragmentManager(),
-	                        "Location Updates");
-	                
-	            }
-	            return false;
-	        }
-	
-	    }
-	    
-	    /*
-	     * Called when the Activity becomes visible.
-	     */
-	    @Override
-	    protected void onStart() {
-	        super.onStart();
-	        // Connect the client.
-	        mLocationClient.connect();
+		// Return a Dialog to the DialogFragment.
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			return mDialog;
+		}
+	}
 
-	        
-	    }
-	    /*
-	     * Called when the Activity is no longer visible.
-	     */
-	    @Override
-	    protected void onStop() {
-	        // Disconnecting the client invalidates it.
-	        mLocationClient.disconnect();
-	        super.onStop();
-	    }
-	 
-	 
-	 
-	 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// Decide what to do based on the original request code
+		switch (requestCode) {
+
+		case CONNECTION_FAILURE_RESOLUTION_REQUEST:
+			/*
+			 * If the result code is Activity.RESULT_OK, try to connect again
+			 */
+			switch (resultCode) {
+			case Activity.RESULT_OK:
+				/*
+				 * Try the request again
+				 */
+
+				break;
+
+			}
+		}
+	}
 	/**
 	 * Fragment that appears in the "content_frame", shows a page
 	 */
 	public static class PageFragment extends Fragment {
 		public static final String ARG_PLANET_NUMBER = "planet_number";
+
 		public PageFragment() {
 			// Empty constructor required for fragment subclasses
 		}
 
-		 @Override
-		    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-		            Bundle savedInstanceState) {
-		        
-		        int i = getArguments().getInt(ARG_PLANET_NUMBER);
-		        String menuItem= getResources().getStringArray(R.array.menu_item)[i];
-		        menuItem = menuItem.replace(" ", "");
-		        FragmentName name = FragmentName.valueOf(menuItem);
-		        	switch (name) {
-		            case RECORDTRANSACTIONS:  return inflater.inflate(R.layout.fragment_record, container, false);
-		            case MISSINGTRANSACTIONS:  return inflater.inflate(R.layout.fragment_missing, container, false);
-		            case VOIDTRANSACTIONS:  return inflater.inflate(R.layout.fragment_void, container, false);
-		            case SALESTRANSACTIONS:  return inflater.inflate(R.layout.fragment_sales, container, false);
-		            default: return inflater.inflate(R.layout.fragment_record, container, false);
-		        	}
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+
+			int i = getArguments().getInt(ARG_PLANET_NUMBER);
+			String menuItem = getResources().getStringArray(R.array.menu_item)[i];
+			menuItem = menuItem.replace(" ", "");
+			FragmentName name = FragmentName.valueOf(menuItem);
+			View rootView = null;
+			switch (name) {
+			case RECORDTRANSACTIONS:
+				return inflater.inflate(R.layout.fragment_record, container,
+						false);
+			case MISSINGTRANSACTIONS:
+				return inflater.inflate(R.layout.fragment_missing, container,
+						false);
+			case VOIDTRANSACTIONS:
+				rootView = inflater.inflate(R.layout.fragment_void,
+						container, false);
+				listViewToDisplay = (ListView) rootView
+						.findViewById(R.id.listView1);
+				return rootView;
+			case SALESTRANSACTIONS:
+				rootView = inflater.inflate(R.layout.fragment_sales,
+						container, false);
+				listViewToDisplay = (ListView) rootView
+						.findViewById(R.id.listView1);
+				return rootView;
+			default:
+				return inflater.inflate(R.layout.fragment_record, container,
+						false);
+			}
 		}
-		 
-            @Override
-            public void onActivityCreated(Bundle savedInstanceState) {
-                super.onActivityCreated(savedInstanceState);
-                /*
-                int j = getArguments().getInt(ARG_PLANET_NUMBER);
-                String menuItem = getResources().getStringArray(R.array.menu_item)[j];
-                if(menuItem.equals("Near By"))
-                {
-                	mCurrentLocation = mLocationClient.getLastLocation();
-            		NearByModelAdapter.LoadModel(listToDisplay , mCurrentLocation);
-            		String[] ids = new String[NearByModelAdapter.Items.size()];
-            		for (int i = 0; i < ids.length; i++) {
 
-            			ids[i] = Integer.toString(i + 1);
-            		}
-                    NearByItemAdapter Adapter = new NearByItemAdapter(getActivity(), R.layout.merchant_list_item, ids);
-                    listViewToDisplay.setAdapter(Adapter);
- //                   listViewToDisplay.setOnItemClickListener(new NearByItemClickListener());
-
-                }
-                
-                */}
-
-
-
-public enum FragmentName {
-
-    RECORDTRANSACTIONS,
-    MISSINGTRANSACTIONS,
-    VOIDTRANSACTIONS,
-    SALESTRANSACTIONS,
-
- }
+		@Override
+		public void onActivityCreated(Bundle savedInstanceState) {
+			super.onActivityCreated(savedInstanceState);
+			int j = getArguments().getInt(ARG_PLANET_NUMBER);
+			String menuItem = getResources().getStringArray(R.array.menu_item)[j];
+			menuItem = menuItem.replace(" ", "");
+			FragmentName name = FragmentName.valueOf(menuItem);
+			TransactionsItemAdapter Adapter = null;
+			switch (name) {
+			case RECORDTRANSACTIONS:
+				break;
+			case MISSINGTRANSACTIONS:
+				break;
+			case VOIDTRANSACTIONS:
+				try {
+					TransactionsModelAdapter.LoadModel(listToDisplay);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				String[] voidids = new String[TransactionsModelAdapter.Items
+						.size()];
+				for (int i = 0; i < voidids.length; i++) {
+					voidids[i] = Integer.toString(i + 1);
+				}
+				Adapter = new TransactionsItemAdapter(
+						getActivity(), R.layout.void_transactions_list, voidids);
+				listViewToDisplay.setAdapter(Adapter);
+				break;
+			case SALESTRANSACTIONS:
+				try {
+					TransactionsModelAdapter.LoadModel(listToDisplay);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				String[] salesids = new String[TransactionsModelAdapter.Items
+						.size()];
+				for (int i = 0; i < salesids.length; i++) {
+					salesids[i] = Integer.toString(i + 1);
+				}
+				Adapter = new TransactionsItemAdapter(
+						getActivity(), R.layout.sales_history_list, salesids);
+				listViewToDisplay.setAdapter(Adapter);
+				break;
+			}
 		}
-		
-
-	@Override
-	public void onConnectionFailed(ConnectionResult result) {
-		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
-	public void onConnected(Bundle connectionHint) {
-		// TODO Auto-generated method stub
-		
+	public enum FragmentName {
+
+		RECORDTRANSACTIONS, MISSINGTRANSACTIONS, VOIDTRANSACTIONS, SALESTRANSACTIONS,
+
 	}
 
-	@Override
-	public void onDisconnected() {
-		// TODO Auto-generated method stub
-		
-	}
-	
+
+
 }
