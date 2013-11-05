@@ -29,31 +29,6 @@
             <LinearLayout
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_alignParentLeft="true" >
-
-                <TextView
-                    android:id="@+id/dateTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/date"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/DarkGray2"
-                    android:textSize="20dp" />
-
-                <EditText
-                    android:id="@+id/editText3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/small_bar"
-                    android:ems="10"
-                    android:textColor="@color/DarkGray2" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
                 android:orientation="vertical" 
                 android:layout_alignParentRight="true" >
 
@@ -73,9 +48,41 @@
                     android:layout_weight="1"
                     android:background="@drawable/small_bar"
                     android:ems="10"
+                    android:textColor="@color/DarkGray2" 
+                    android:inputType="time" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/dateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/DarkGray2"
+                    android:textSize="20dp" />
+
+
+                <EditText
+                    android:id="@+id/editText3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/small_bar"
+                    android:ems="10"
+                    android:inputType="date"
                     android:textColor="@color/DarkGray2" />
             </LinearLayout>
+
         </RelativeLayout>
+
+
         
         <TextView
             android:id="@+id/reason"
@@ -211,7 +218,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/submitButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="240dp"
         android:layout_height="45dp"
