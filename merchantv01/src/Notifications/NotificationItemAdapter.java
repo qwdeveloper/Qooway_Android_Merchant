@@ -87,7 +87,6 @@ public class NotificationItemAdapter extends ArrayAdapter<String> {
 
 		checkInTextView
 				.setText(NotificationModelAdapter.GetbyId(id).checkInMessage_);
-
 		userImageView.setBackgroundResource(context.getResources()
 				.getIdentifier(userImageFile, "drawable",
 						context.getPackageName()));

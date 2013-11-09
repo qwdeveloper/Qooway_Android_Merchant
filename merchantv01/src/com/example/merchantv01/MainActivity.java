@@ -2,6 +2,7 @@ package com.example.merchantv01;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -17,6 +18,8 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.example.merchantv01.R;
@@ -26,6 +29,7 @@ import Drawer.DrawerItemAdapter;
 import Drawer.DrawerModelAdapter;
 import Notifications.NotificationItemAdapter;
 import Notifications.NotificationModelAdapter;
+import Transactions.Transactions;
 import Transactions.TransactionsItemAdapter;
 import Transactions.TransactionsModelAdapter;
 
@@ -33,6 +37,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
+import com.google.gson.Gson;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -73,25 +78,29 @@ public class MainActivity extends Activity {
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
 	private String[] mPlanetTitles;
-	private String serverUrl = "http://192.168.1.96:50364";
-	private String APIUrl = "api/transaction?MerchantID=141";
-	private String stringUrl = serverUrl + "/" + APIUrl;
-	private TextView displayText;
-	private static List<Entry> listToDisplay;
-	private Activity currentActvity;
-	private static ListView listViewToDisplay;
-	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-	private static ListView notificationDisplayList;
-	private static Button submit = null;
-	private static TextView salesAmount = null;
-	private static TextView cardNumber = null;
-	private static TextView referenceNumber = null;
+	public String serverUrl = "http://192.168.1.96:50364";
+	public  String APIUrl = "api/transaction?MerchantID=141";
+	public String stringUrl = serverUrl + "/" + APIUrl;
+	public String postUrl = serverUrl + "/" + "api/transaction";
+	public TextView displayText;
+	public static List<Entry> listToDisplay;
+	public Activity currentActvity;
+	public static ListView listViewToDisplay;
+	public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+	public static ListView notificationDisplayList;
+	public static Button submit = null;
+	public static TextView salesAmount = null;
+	public static TextView cardNumber = null;
+	public static TextView referenceNumber = null;
 	public Runnable mPendingRunnable;
-	public ProgressDialog progress ;
-	private boolean fragmentChanged= false;
+	public ProgressDialog progress;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+
+		// convert java object to JSON format,
+		// and returned as JSON formatted string
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		// getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -117,6 +126,7 @@ public class MainActivity extends Activity {
 
 		DrawerItemAdapter adapter = new DrawerItemAdapter(this,
 				R.layout.drawer_list_item, ids);
+
 		mDrawerList.setAdapter(adapter);
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 		// enable ActionBar app icon to behave as action to toggle nav drawer
@@ -135,16 +145,18 @@ public class MainActivity extends Activity {
 				getActionBar().setTitle(mTitle);
 				invalidateOptionsMenu(); // creates call to
 											// onPrepareOptionsMenu()
-				  final Handler mHandler = new Handler();
-				  if (mPendingRunnable != null ){
-				        mHandler.post(mPendingRunnable);
-				        mPendingRunnable = null;
-				    }
-				  
-				  progress = ProgressDialog.show(MainActivity.this, "Downloading Data", "Please wait while Data are downloaded");
-				    progress.setCancelable(false);
-				    progress.isIndeterminate();
-				    progress.show();
+				final Handler mHandler = new Handler();
+				if (mPendingRunnable != null) {
+					mHandler.post(mPendingRunnable);
+					mPendingRunnable = null;
+				}
+
+				progress = ProgressDialog.show(MainActivity.this,
+						"Downloading Data",
+						"Please wait while Data are downloaded");
+				progress.setCancelable(false);
+				progress.isIndeterminate();
+				progress.show();
 
 			}
 
@@ -158,7 +170,6 @@ public class MainActivity extends Activity {
 
 		if (savedInstanceState == null) {
 			selectItem(0);
-
 		}
 
 		currentActvity = this;
@@ -189,6 +200,7 @@ public class MainActivity extends Activity {
 		NotificationItemAdapter Adapter = new NotificationItemAdapter(this,
 				R.layout.notification_list, NotificationIds);
 		notificationDisplayList.setAdapter(Adapter);
+		changeFragment(0);
 	}
 
 	@Override
@@ -254,33 +266,31 @@ public class MainActivity extends Activity {
 	}
 
 	private void selectItem(final int position) {
-		 mPendingRunnable = new Runnable() {
-		        @Override
-		        public void run() {
-		// update the main content by replacing fragments
-			    	changeFragmentOnFirstGo(position);
-		        }
-		    };
+		mPendingRunnable = new Runnable() {
+			@Override
+			public void run() {
+				// update the main content by replacing fragments
+				changeFragment(position);
+			}
+		};
 		// update selected item and title, then close the drawer
-		    if(!fragmentChanged)
-		    {
-		    	changeFragmentOnFirstGo(position);
-		    }
+
 		mDrawerList.setItemChecked(position, true);
 		setTitle(mPlanetTitles[position]);
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
-	
-	private void changeFragmentOnFirstGo(final int position)
-	{
+
+	private void changeFragment(final int position) {
 		Fragment fragment = new PageFragment(MainActivity.this);
 		Bundle args = new Bundle();
 		args.putInt(PageFragment.ARG_PAGE_NUMBER, position);
 		fragment.setArguments(args);
 		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-		fragmentChanged =true;
+		fragmentManager.beginTransaction()
+				.replace(R.id.content_frame, fragment).commit();
+
 	}
+
 	@Override
 	public void setTitle(CharSequence title) {
 		mTitle = title;
@@ -309,80 +319,7 @@ public class MainActivity extends Activity {
 	/**
 	 * Fragment that appears in the "content_frame", shows a planet
 	 */
-	private class DownloadWebpageTask extends
-			AsyncTask<String, Void, List<Entry>> {
-
-		@SuppressWarnings("finally")
-		@Override
-		protected List<Entry> doInBackground(String... urls) {
-			// params comes from the execute() call: params[0] is the url.
-			List<Entry> result = null;
-			try {
-				result = loadXml(urls[0]);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return result;
-		}
-
-
-		// onPostExecute displays the results of the AsyncTask.
-		@Override
-		protected void onPostExecute(List<Entry> result) {
-			listToDisplay = result;
-			progress.cancel();
-
-		}
-
-		@SuppressWarnings("unchecked")
-		private List<Entry> loadXml(String urlString)
-				throws XmlPullParserException, IOException {
-			InputStream stream = null;
-			List<Entry> entries = null;
-			FeedParser parser = new FeedParser();
-
-			try {
-				stream = downloadUrl(urlString);
-				entries = parser.parse(stream, currentActvity);
-				// Makes sure that the InputStream is closed after the app is
-				// finished using it.
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			if (stream != null) {
-				stream.close();
-			}
-
-			return entries;
-
-		}
-
-		private InputStream downloadUrl(String urlString) throws IOException,
-				URISyntaxException {
-			URL url = new URL(urlString);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-			URI uri = new URI(urlString);
-			HttpParams params = new BasicHttpParams();
-			params.setParameter("key1", "value1");
-			params.setParameter("key2", "value2");
-			params.setParameter("key3", "value3");
-			HttpRequestBase request = new HttpGet(uri);
-			HttpClient httpClient = new DefaultHttpClient();
-			httpClient.execute(request);
-
-			conn.setReadTimeout(10000 /* milliseconds */);
-			conn.setConnectTimeout(15000 /* milliseconds */);
-			conn.setRequestMethod("GET");
-			conn.setDoInput(true);
-			conn.setRequestProperty("Accept", "text/xml");
-			// Starts the query
-			conn.connect();
-			return conn.getInputStream();
-		}
-
-	}
+	
 
 	// private classes
 
@@ -422,194 +359,29 @@ public class MainActivity extends Activity {
 				/*
 				 * Try the request again
 				 */
-
 				break;
-
 			}
 		}
 	}
 
-	/**
-	 * Fragment that appears in the "content_frame", shows a page
-	 */
-	public static class PageFragment extends Fragment {
-		public static final String ARG_PAGE_NUMBER = "page_number";
-		private MainActivity mainActivity;
-
-		public PageFragment(MainActivity MA) {
-			mainActivity = MA;
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-
-			int i = getArguments().getInt(ARG_PAGE_NUMBER);
-			String menuItem = getResources().getStringArray(R.array.menu_item)[i];
-			menuItem = menuItem.replace(" ", "");
-			FragmentName name = FragmentName.valueOf(menuItem);
-			View rootView = null;
-			try {
-				switch (name) {
-				case RECORDTRANSACTIONS:
-					return createRecord(inflater, container);
-				case MISSINGTRANSACTIONS:
-					return createMissing(inflater, container);
-				case VOIDTRANSACTIONS:
-					return createVoid(inflater, container);
-				case SALESTRANSACTIONS:
-					return createSales(inflater, container);
-				default:
-					return createRecord(inflater, container);
-				}
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return rootView;
-		}
-
-		@Override
-		public void onActivityCreated(Bundle savedInstanceState) {
-			super.onActivityCreated(savedInstanceState);
-			int j = getArguments().getInt(ARG_PAGE_NUMBER);
-			String menuItem = getResources().getStringArray(R.array.menu_item)[j];
-			menuItem = menuItem.replace(" ", "");
-			FragmentName name = FragmentName.valueOf(menuItem);
-			switch (name) {
-			case RECORDTRANSACTIONS:
-				this.setupRecord(this.getActivity());
-				break;
-			case MISSINGTRANSACTIONS:
-				this.setupMissing(this.getActivity());
-				break;
-			case VOIDTRANSACTIONS:
-				this.setupVoid(this.getActivity());
-				break;
-			case SALESTRANSACTIONS:
-				this.setupSales(this.getActivity());
-				break;
-			}
-		}
-
-		private View createRecord(LayoutInflater inflater, ViewGroup container) {
-			View rootView = null;
-			rootView = inflater.inflate(R.layout.fragment_record, container,
-					false);
-			submit = (Button) rootView.findViewById(R.id.submitButton);
-			submit.setOnClickListener(new View.OnClickListener() {
-
-				public void onClick(View v) {
-					String salesAmountString = salesAmount.getText().toString();
-					String cardNumberString = cardNumber.getText().toString();
-					String referenceNumberString = referenceNumber.getText()
-							.toString();
-					this.insertRecord(salesAmountString, cardNumberString,
-							referenceNumberString);
-				}
-
-				private void insertRecord(String salesAmount,
-						String cardNumber, String referenceNumber) {
-
-				}
-
-			});
-			salesAmount = (TextView) rootView.findViewById(R.id.salesAmount);
-			cardNumber = (TextView) rootView.findViewById(R.id.cardNumber);
-			referenceNumber = (TextView) rootView
-					.findViewById(R.id.referenceNum);
-			return rootView;
-		}
-
-		private View createMissing(LayoutInflater inflater, ViewGroup container) {
-			View rootView = null;
-			rootView = inflater.inflate(R.layout.fragment_missing, container,
-					false);
-			submit = (Button) rootView.findViewById(R.id.submitButton);
-			return rootView;
-		}
-
-		private View createVoid(LayoutInflater inflater, ViewGroup container)
-				throws InterruptedException, ExecutionException {
-    
-			View rootView = null;
-			this.mainActivity.webApiGet(this.mainActivity.serverUrl + '/'
-					+ this.mainActivity.APIUrl);
-			rootView = inflater.inflate(R.layout.fragment_void, container,
-					false);
-			listViewToDisplay = (ListView) rootView
-					.findViewById(R.id.listView1);
-			return rootView;
-		}
-
-		private View createSales(LayoutInflater inflater, ViewGroup container)
-				throws InterruptedException, ExecutionException {
-
-			View rootView = null;
-			this.mainActivity.webApiGet(this.mainActivity.serverUrl + '/'
-					+ this.mainActivity.APIUrl);
-			rootView = inflater.inflate(R.layout.fragment_sales, container,
-					false);
-			listViewToDisplay = (ListView) rootView
-					.findViewById(R.id.listView1);
-			return rootView;
-		}
-
-		private void setupRecord(Activity act) {
-           mainActivity.progress.cancel();
-		}
-
-		private void setupMissing(Activity act) {
-			mainActivity.progress.cancel();
-		}
-
-		private void setupVoid(Activity act) {
-
-			TransactionsItemAdapter Adapter = null;
-			try {
-				TransactionsModelAdapter.LoadModel(listToDisplay);
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			String[] voidids = new String[TransactionsModelAdapter.Items.size()];
-			for (int i = 0; i < voidids.length; i++) {
-				voidids[i] = Integer.toString(i + 1);
-			}
-			Adapter = new TransactionsItemAdapter(act,
-					R.layout.void_transactions_list, voidids);
-			listViewToDisplay.setAdapter(Adapter);
-		}
-
-		private void setupSales(Activity act) {
-
-			TransactionsItemAdapter Adapter = null;
-			try {
-				TransactionsModelAdapter.LoadModel(listToDisplay);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			String[] salesids = new String[TransactionsModelAdapter.Items
-					.size()];
-			for (int i = 0; i < salesids.length; i++) {
-				salesids[i] = Integer.toString(i + 1);
-			}
-			Adapter = new TransactionsItemAdapter(act,
-					R.layout.sales_history_list, salesids);
-			listViewToDisplay.setAdapter(Adapter);
-		}
-	}
-
-	public void webApiPost(String url) throws InterruptedException,
-			ExecutionException {
+	
+	public void webApiPost(String url, String json)
+			throws InterruptedException, ExecutionException {
+		String para[] = { url, json };
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			this.listToDisplay = new DownloadWebpageTask().execute(url).get();
+			String result = new HttpPostTask(this).execute(para).get();
+			Toast toast = null;
+			String text = "";
+			int duration = Toast.LENGTH_SHORT;
+			if (result.equals("Created")) {
+				text = "Record Added";
+			} else {
+				text = "Record Can Not be added";
+			}
+			toast = Toast.makeText(this, text, duration);
+			toast.show();
 		} else {
 			displayText.setText("No network connection available.");
 		}
@@ -617,19 +389,14 @@ public class MainActivity extends Activity {
 
 	public void webApiGet(String url) throws InterruptedException,
 			ExecutionException {
+		String para[] = { url };
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			this.listToDisplay = new DownloadWebpageTask().execute(url).get();
+			this.listToDisplay = new HttpRequestTask(this).execute(para).get();
 		} else {
 			displayText.setText("No network connection available.");
 		}
-	}
-
-	public enum FragmentName {
-
-		RECORDTRANSACTIONS, MISSINGTRANSACTIONS, VOIDTRANSACTIONS, SALESTRANSACTIONS,
-
 	}
 
 }

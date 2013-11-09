@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search_by_card"
-            android:textColor="@color/DarkGray2"
+            android:textColor="@color/DarkGrayTwo"
             android:textSize="20dp" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/please_enter_card"
-            android:textColor="@color/DarkGray2"
+            android:textColor="@color/DarkGrayTwo"
             android:textSize="13dp" />
 
         <EditText
@@ -42,7 +42,7 @@
             android:layout_height="35dp"
             android:background="@drawable/big_bar"
             android:ems="10"
-            android:textColor="@color/DarkGray2" >
+            android:textColor="@color/DarkGrayTwo" >
 
             <requestFocus />
         </EditText>
@@ -70,53 +70,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-  <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:background="@color/DarkGray"
-        android:gravity="center" >
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/DarkGrayTwo"
+            android:gravity="center" >
 
-        <TextView
-            android:id="@+id/date"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Date"
-			android:layout_width="wrap_content"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Date"
+                android:textColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/time"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Time"
-            android:layout_width="wrap_content"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Time"
+                android:textColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/sales_amount"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/sales_amount"
-			android:layout_width="wrap_content"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/sales_amount"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/sales_amount"
+                android:textColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/points_earned"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/points_earned"
-			android:layout_width="wrap_content"
-            android:textColor="@android:color/white" />
-    </TableRow>
+            <TextView
+                android:id="@+id/points_earned"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/points_earned"
+                android:textColor="@android:color/white" />
+        </TableRow>
 
         <LinearLayout
             android:id="@+id/listViewParent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-                        android:layout_below="@+id/tableRow1"
             android:layout_above="@+id/voidButtonView"
+            android:layout_below="@+id/tableRow1"
             android:gravity="center"
             android:orientation="vertical" >
 

@@ -42,11 +42,9 @@
             </ListView>
 
                        <View
-            android:id="@+id/content"
+            android:id="@+id/dummieView"
             android:layout_width="match_parent"
             android:layout_height="800dp"
-           >
-            
             android:background="@color/LightGrey" >
         </View>
         </LinearLayout>

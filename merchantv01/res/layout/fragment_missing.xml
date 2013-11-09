@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/time"
-                    android:textColor="@color/DarkGray2" 
+                    android:textColor="@color/DarkGrayTwo" 
                      android:textSize="20dp"
                     />
 
@@ -48,7 +48,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/small_bar"
                     android:ems="10"
-                    android:textColor="@color/DarkGray2" 
+                    android:textColor="@color/DarkGrayTwo" 
                     android:inputType="time" />
             </LinearLayout>
 
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/date"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/DarkGray2"
+                    android:textColor="@color/DarkGrayTwo"
                     android:textSize="20dp" />
 
 
@@ -77,7 +77,7 @@
                     android:background="@drawable/small_bar"
                     android:ems="10"
                     android:inputType="date"
-                    android:textColor="@color/DarkGray2" />
+                    android:textColor="@color/DarkGrayTwo" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -89,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/reason"
-            android:textColor="@color/DarkGray2" 
+            android:textColor="@color/DarkGrayTwo" 
                android:textSize="20dp" />
                <LinearLayout
             android:layout_width="match_parent"
@@ -102,7 +102,7 @@
             android:layout_height="35dp"
             android:background="@drawable/big_bar"
             android:ems="10"
-            android:textColor="@color/DarkGray2">
+            android:textColor="@color/DarkGrayTwo">
 
             <requestFocus />
         </EditText>
@@ -112,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/card_number"
-            android:textColor="@color/DarkGray2" 
+            android:textColor="@color/DarkGrayTwo" 
              android:textSize="20dp" />
 
         <TextView
@@ -120,7 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/please_enter_card"
-            android:textColor="@color/DarkGray2" 
+            android:textColor="@color/DarkGrayTwo" 
              android:textSize="13dp" />
 
                 <LinearLayout
@@ -133,7 +133,7 @@
             android:layout_height="35dp"
             android:background="@drawable/big_bar"
             android:ems="10"
-            android:textColor="@color/DarkGray2" >
+            android:textColor="@color/DarkGrayTwo" >
 
             <requestFocus />
         </EditText>
@@ -154,7 +154,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sales_amount"
-                    android:textColor="@color/DarkGray2"
+                    android:textColor="@color/DarkGrayTwo"
                       android:textSize="20dp"  />
 
                 <EditText
@@ -164,7 +164,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/small_bar"
                     android:ems="10"
-                    android:textColor="@color/DarkGray2" />
+                    android:textColor="@color/DarkGrayTwo" />
             </LinearLayout>
 
             <LinearLayout
@@ -178,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/reference"
-                    android:textColor="@color/DarkGray2"
+                    android:textColor="@color/DarkGrayTwo"
                         android:textSize="20dp" />
 
                 <EditText
@@ -188,7 +188,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/small_bar"
                     android:ems="10"
-                    android:textColor="@color/DarkGray2" />
+                    android:textColor="@color/DarkGrayTwo" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -202,7 +202,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/qoopoints"
-                android:textColor="@color/DarkGray2" 
+                android:textColor="@color/DarkGrayTwo" 
                   android:textSize="20dp"/>
 
             <TextView

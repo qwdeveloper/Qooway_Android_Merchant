@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/record_agree_greetings"
-            android:textColor="@color/DarkGray2"
+            android:textColor="@color/DarkGrayTwo"
             android:textSize="13dp"
             android:textStyle="italic" 
             android:layout_centerHorizontal="true" 
@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/card_number"
-            android:textColor="@color/DarkGray2" 
+            android:textColor="@color/DarkGrayTwo" 
               android:textSize="20dp" 
               />
 
@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/please_enter_card"
-            android:textColor="@color/DarkGray2" 
+            android:textColor="@color/DarkGrayTwo" 
             android:paddingBottom="10dp"/>
 
         <EditText
@@ -77,7 +77,7 @@
                  android:layout_height="35dp"
             android:background="@drawable/big_bar"
             android:ems="10"
-            android:textColor="@color/DarkGray2" 
+            android:textColor="@color/DarkGrayTwo" 
 >
 
             <requestFocus />
@@ -97,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sales_amount"
-                    android:textColor="@color/DarkGray2"
+                    android:textColor="@color/DarkGrayTwo"
                       android:textSize="20dp"  />
 
                 <EditText
@@ -107,7 +107,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/small_bar"
                     android:ems="10"
-                    android:textColor="@color/DarkGray2" 
+                    android:textColor="@color/DarkGrayTwo" 
 />
             </LinearLayout>
 
@@ -122,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/reference"
-                    android:textColor="@color/DarkGray2"
+                    android:textColor="@color/DarkGrayTwo"
                       android:textSize="20dp"  />
 
                 <EditText
@@ -132,7 +132,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/small_bar"
                     android:ems="10"
-                    android:textColor="@color/DarkGray2" />
+                    android:textColor="@color/DarkGrayTwo" />
             </LinearLayout>
      </RelativeLayout>
 
@@ -146,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/qoopoints"
-                android:textColor="@color/DarkGray2" 
+                android:textColor="@color/DarkGrayTwo" 
                   android:textSize="20dp" />
 
             <TextView
@@ -169,7 +169,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/vouchers"
-                android:textColor="@color/DarkGray2" 
+                android:textColor="@color/DarkGrayTwo" 
                   android:textSize="20dp" />
 
             <TextView
