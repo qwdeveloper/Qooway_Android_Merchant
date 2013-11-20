@@ -7,6 +7,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -16,7 +17,9 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParserException;
+
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.widget.Toast;
 
 public class HttpPostTask extends AsyncTask<String, Void, String> {
@@ -58,12 +61,17 @@ public class HttpPostTask extends AsyncTask<String, Void, String> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		 String userName="alan@qooway.com";
+		 String passWord="abc123";
 		String resultt = jsonObjSend.toString();
 		HttpURLConnection httpcon = (HttpURLConnection) ((new URL(urls[0]).openConnection()));
 		httpcon.setDoOutput(true);
 		httpcon.setRequestProperty("Accept", "application/json");
 		httpcon.setRequestProperty("Content-Type", "application/json");
 		httpcon.setRequestMethod("POST");
+		httpcon.setRequestProperty("Authorization", "Basic " + Base64.encodeToString(((userName+":"+passWord).getBytes()), Base64.NO_WRAP));
+
 		httpcon.connect();
 		byte[] outputBytes = jsonObjSend.toString().getBytes("UTF-8");
 		OutputStream os = httpcon.getOutputStream();

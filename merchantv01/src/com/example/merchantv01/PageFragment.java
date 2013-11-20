@@ -111,7 +111,11 @@ public class PageFragment extends Fragment {
 			private void insertRecord(String salesAmount,
 					String cardNumber, String referenceNumber)
 					throws JSONException {
-				WebPointOrderHead tran = new WebPointOrderHead(salesAmount, cardNumber, referenceNumber);
+				
+				//hard code for testing
+				cardNumber ="3c9058e1-a7dd-4789-a55e-e26a786f6010";
+				Integer merchantID = new Integer(149);
+				WebPointOrderHead tran = new WebPointOrderHead(salesAmount, cardNumber, referenceNumber, merchantID);
 				Gson gson = new Gson();
 				String json = gson.toJson(tran);
 

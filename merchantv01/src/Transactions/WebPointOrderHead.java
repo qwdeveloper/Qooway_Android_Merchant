@@ -2,48 +2,48 @@ package Transactions;
 import java.util.Date;
 public class WebPointOrderHead {
 
-	private int OrderID;
+	private Integer OrderID;
 	private Date OrderTime;
 	private String PointCardCode;
 	private String CustomerID;
-	private int MerchantID;
-	private float SoldAmount;
+	private Integer MerchantID;
+	private Float SoldAmount;
 	private String Reference;
-	private int Points;
-	private int NetPoints;
-	private char OrderType;
-	private char Status;
+	private Integer Points;
+	private Integer NetPoints;
+	private String OrderType;
+	private String Status;
 	private String Remark;
 	private String OLOStoreID;
 	private String OLOStoreName;
-	private float FinalSoldAmount;
-	private int FinalPoints;
-	private int PointRate;
+	private Float FinalSoldAmount;
+	private Integer FinalPoints;
+	private Integer PointRate;
 	private Date CreateTime;
-	private float OrderFeeAmount;
-	private int BillId;
+	private Float OrderFeeAmount;
+	private Integer BillId;
 	
-	public WebPointOrderHead(String soldAmount, String customerID , String reference)
+	public WebPointOrderHead(String soldAmount, String customerID , String reference , Integer merchantID)
 	{
-		OrderID = 400;
-		MerchantID = 500;
-		Points = 3;
-		NetPoints= 4;
-		FinalPoints=5;
-		PointRate= 6;
-		BillId = 7;
+		OrderID = null;
+		MerchantID = merchantID;
+		Points = null;
+		NetPoints= null;
+		FinalPoints=null;
+		PointRate= null;
+		BillId = 0;
 		SoldAmount = Float.parseFloat(soldAmount);
-		FinalSoldAmount =(float) 12.3;
-		OrderFeeAmount = (float) 1241.1;
-		OrderType = 'l' ;
-		Status = 'o';
+		FinalSoldAmount =null;
+		OrderFeeAmount = (float) 0.00;
+		OrderType = "I" ;
+		Status = null;
 		OrderTime = new Date();
 		CreateTime = new Date();
-		PointCardCode = "123" ;
+		PointCardCode = null;
 		CustomerID= customerID ;
 		Reference = reference ;
-		Remark = "123" ;
-		OLOStoreID = "123" ;
-		OLOStoreName = "123" ;
+		Remark = null ;
+		OLOStoreID = "" ;
+		OLOStoreName = "" ;
 	}
 }

@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -13,7 +14,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.xmlpull.v1.XmlPullParserException;
+
 import android.os.AsyncTask;
+import android.util.Base64;
 
 
 public class HttpRequestTask extends AsyncTask<String, Void, List<Entry>> {
@@ -89,11 +92,15 @@ public class HttpRequestTask extends AsyncTask<String, Void, List<Entry>> {
 		HttpClient httpClient = new DefaultHttpClient();
 		httpClient.execute(request);
 */
+		 String userName="alan@qooway.com";
+		 String passWord="abc123";
 		conn.setReadTimeout(10000 /* milliseconds */);
 		conn.setConnectTimeout(15000 /* milliseconds */);
 		conn.setRequestMethod("GET");
 		conn.setDoInput(true);
 		conn.setRequestProperty("Accept", "text/xml");
+		conn.setRequestProperty("Authorization", "Basic " + Base64.encodeToString(((userName+":"+passWord).getBytes()), Base64.NO_WRAP));
+
 		// Starts the query
 		conn.connect();
 		return conn.getInputStream();
